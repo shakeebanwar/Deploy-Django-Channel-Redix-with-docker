@@ -20,9 +20,12 @@
             + roomName
             + '/'
         );
+        console.log("chatSocket",chatSocket)
 
         chatSocket.onmessage = function(e) {
+            
             const data = JSON.parse(e.data);
+            console.log("onmessage",data)
             document.querySelector('#chat-log').value += (data.message + '\n');
         };
 
@@ -40,11 +43,46 @@
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
+            
             chatSocket.send(JSON.stringify({
                 'message': message
             }));
             messageInputDom.value = '';
         };
+
+
+
+
+
+
+
+
+
+
+
+
+    // notification work
+
+    const noficationSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/notification/'
+            + roomName
+            + '/'
+        );
+
+    
+    console.log("noficationSocket",noficationSocket)
+
+
+    noficationSocket.onmessage = function(e) {
+            
+            const data = JSON.parse(e.data);
+            console.log("onmessage",data)
+            document.querySelector('#chat-log').value += (data.message + '\n');
+            alert("notification")
+        };
+
     </script>
 </body>
 </html>
